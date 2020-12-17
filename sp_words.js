@@ -334,25 +334,6 @@ var wordsRaw = [
     "her", "sklipyp",
     "their", "sklipypity",
 
-    //Numbers
-    //Ordinal words start with sk
-    //Number innards: er, on, ot, er, or, ib, ik, eb, ok, in
-    //Zero: seryp
-    //One: sonyp
-    //Two: sotyp
-    //Three: seryp
-    //Four: soryp
-    //Five: sibyp
-    //Six: sikyp
-    //Seven: sebyp
-    //Eight: sokyp
-    //Nine: sinyp
-    //Point: skilyp
-    //Longer Numbers are the innards combined with an "s" at the beginning and an "yp" at the end
-    //ex. 456 => souribickyp
-    //Stack (64): sikoryp
-    //Stack (16): sonikyp
-
     "!!Adjective (op)",
     "!Basic",
     "adjective", "sop",

@@ -11,12 +11,101 @@
         <title>Splepian Language Utility</title>
         <script src="sp_words.js"></script>
         <script src="utility.js"></script>
-        <link href="splep.css" rel="stylesheet" type="text/css"></link>
+        <link href="splep.css" rel="stylesheet" type="text/css">
+        </link>
     </head>
 
     <body onkeydown="keyPress(event)">
-        <input type="text" id="search" oninput="updateResults(this.value)" value="Search" onblur="if(this.value=='') this.value='Search...'" onfocus="if(this.value=='Search...') this.value=''">
+        <input type="text" id="search" oninput="updateResults(this.value)" value="Search"
+               onblur="if(this.value=='') this.value='Search...'" onfocus="if(this.value=='Search...') this.value=''">
         <div id="results"></div>
+        <div id="help">
+            <div id="helpStatus">
+            </div>
+            <div id="helpmain" class="helpPage">
+            <ul>
+            <li><a href="javascript:openHelp('number',true)">Numbers</a></li>
+            <li><a href="javascript:openHelp('verb',true)">Verb Conjugation</a></li>
+            <li><a href="javascript:openHelp('grammar',true)">Grammar</a></li>
+            <li><a href="javascript:openHelp('index',true)">Index</a></li>
+            <li><a href="javascript:openHelp('credits',true)">Credits</a></li>
+
+            </ul>
+            </div>
+            <div id="helpnumber" class="helpPage">
+                <h2>Numbers in Splepian</h2>
+                All Numbers begin with an "s" and end with a "yp".
+                Start with an "s", append the characters of the numeral in base ten, then end with a "yp".
+                <h3>Innards</h3>
+                <ul>
+                    <li>0 - er</li>
+                    <li>1 - on</li>
+                    <li>2 - ot</li>
+                    <li>3 - etr</li>
+                    <li>4 - our</li>
+                    <li>5 - ib</li>
+                    <li>6 - ick</li>
+                    <li>7 - eb</li>
+                    <li>8 - ok</li>
+                    <li>9 - in</li>
+                    <li>Negative - en</li>
+                    <li>Period - op</li>
+                </ul>
+                <h3>Examples:</h3>
+                <ul>
+                    <li>64 - sickouryp</li>
+                    <li>1.5 - sonopibyp</li>
+                    <li>-3 - senotryp</li>
+                </ul>
+            </div>
+            <div id="helpverb" class="helpPage">
+                <h3>Verbs Conjugation in Splepian</h3>
+
+                Infinitive: no suffix<br>
+
+                All other verbs are conjugated with two suffixes. First: the completion, second: the time.
+
+                <h3>Completion</h3>
+                <ul>
+                    <li>Simple (do): ep</li>
+                    <li>Continuous (is doing): ef</li>
+                    <li>Perfect (has done): el</li>
+                    <li>Perfect Continuous (has been doing): em</li>
+                </ul>
+                <h3>Time</h3>
+                <ul>
+                    <li>Past: idy</li>
+                    <li>Present: ity</li>
+                    <li>Future: ify</li>
+                </ul>
+
+                <h3>Examples</h3>
+                <ul>
+                    <li>I am - skip sepity</li>
+                    <li>I am collecting (slope) - skip slopefity</li>
+                    <li>I have started -  skip sytopelidy</li>
+                    <li>I will have been walking - skip sbibemify</li>
+                    <li>I have said - skip splodelity</li>
+                </ul>
+            </div>
+            <div id="helpgrammar" class="helpPage">
+            <h2>Splepian Grammar Rules</h2>
+            <ul>
+                <li>Adjectives go before nouns</li>
+                <li>Translative words go before (Example: sop sclirip means snowy)</li>
+                <li>The same word order and verb rules as English</li>
+                <li>Plural nouns and pronouns have the suffix "ity" (Example: sbebipity means bees)</li>
+            </ul>
+            </div>
+            <div id="helpindex" class="helpPage">
+                Index
+            </div>
+            <div id="helpcredits" class="helpPage">
+                Originally created by The Unfit Donkey.<br>
+                Inspired by Joseph.<br>
+                See the GitHub repository <a href="https://github.com/Unfit-Donkey/Splepian-Language-Utility">here</a>.
+            </div>
+        </div>
     </body>
 
 </html>

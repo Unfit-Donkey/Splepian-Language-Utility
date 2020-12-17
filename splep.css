@@ -18,10 +18,13 @@ body {
     box-sizing:border-box;
     -moz-box-sizing:border-box;
 }
-.result {
+#results {
     padding-top:5px;
     padding-left:5vw;
     padding-right:5vw;
+}
+.result {
+    padding-bottom:5px;
 }
 .eng {
     color:#CCC;
@@ -35,4 +38,26 @@ body {
 .SSubCat {
     float:right;
     padding-left:20px;
+}
+#cover {
+    background-color:#22222299;
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    z-index:10;
+    display:none;
+}
+#help {
+    padding-left:5vw;
+    padding-right:5vw;
+}
+.helpPage {
+    display:none;
+}
+a {
+    color: #CCCCCC;
+    text-decoration:none;
+}
+a:hover {
+    color: #FFFFFF;
 }

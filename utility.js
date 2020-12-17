@@ -28,8 +28,8 @@ class searchResult {
     }
     toHTML() {
         let out = `<div class="result"><span class="SIn ${this.in % 2 == 0 ? "eng" : "spl"}">${dict.words[this.in]}</span><span class="SOut ${this.out % 2 == 0 ? "eng" : "spl"}">${dict.words[this.out]}</span>`;
-        if(this.subcat != -1&&dict.subcatNames[this.subcat]!="Basic") out += `<span class="SSubCat">${dict.subcatNames[this.subcat]}</span>`;
-        if(this.cat != -1&&dict.catNames[this.cat]!="Basic") out += `<span class="SCat">${dict.catNames[this.cat]}</span>`;
+        if(this.subcat != -1 && dict.subcatNames[this.subcat] != "Basic") out += `<span class="SSubCat">${dict.subcatNames[this.subcat]}</span>`;
+        if(this.cat != -1 && dict.catNames[this.cat] != "Basic") out += `<span class="SCat">${dict.catNames[this.cat]}</span>`;
         return out + "</div>";
     }
     static sort(results) {
@@ -43,6 +43,7 @@ class searchResult {
     }
 }
 function performSearch(text) {
+    text = text.toLowerCase();
     let results = [];
     let curCat = -1;
     let cursubCat = -1;
@@ -65,7 +66,7 @@ function performSearch(text) {
             let j;
             let max = dict.cat[i + 1];
             if(i + 1 >= dict.cat.length) max = dict.words.length;
-            for(j = dict.cat[i]; j < max; j+=2) {
+            for(j = dict.cat[i]; j < max; j += 2) {
                 results.push(new searchResult(j, addType, i, null));
             }
         }
@@ -81,7 +82,7 @@ function performSearch(text) {
             let j;
             let max = dict.subcat[i + 1];
             if(i + 1 >= dict.subcat.length) max = dict.words.length;
-            for(j = dict.subcat[i]; j < max; j+=2) {
+            for(j = dict.subcat[i]; j < max; j += 2) {
                 results.push(new searchResult(j, addType, null, i));
             }
         }
@@ -90,15 +91,34 @@ function performSearch(text) {
 }
 onload = function () {
     dict = parseWords(wordsRaw);
-    document.getElementById("search").value="Search...";
+    document.getElementById("search").value = "Search...";
     console.log("Visit https://github.com/Unfit-Donkey/Splepian-Language-Utility for more information.");
 }
 function updateResults(text) {
     let out = document.getElementById("results");
+    if(text.length == 0) {
+        out.innerHTML = "Press Ctrl+S to search, or Ctrl+H for help.";
+        return;
+    }
     out.innerHTML = "";
-    if(text.length < 2) return;
+    if(text.length < 2) {
+        out.innerHTML = "Type two or more characters.";
+        return;
+    }
+    if(text.startsWith("help")) {
+        openHelp(text.split(" ")[1], false);
+        document.getElementById("help").style.display = "block";
+        return;
+    }
+    else {
+        document.getElementById("help").style.display = "none";
+    }
     let results = performSearch(text);
     let len = results.length;
+    if(len == 0) {
+        out.innerHTML = "No results ¯\\_(ツ)_/¯";
+        return;
+    }
     if(len > 100) len = 100;
     let outText = "";
     for(let i = 0; i < len; i++) {
@@ -111,6 +131,12 @@ function keyPress(event) {
         event.preventDefault();
         document.getElementById("search").value = "";
         updateResults("");
+        document.getElementById("search").focus();
+    }
+    if(event.key == "h" && event.ctrlKey) {
+        event.preventDefault();
+        document.getElementById("search").value = "help";
+        updateResults("help");
         document.getElementById("search").focus();
     }
 }
@@ -136,4 +162,53 @@ function toDocument(includeIndex) {
     }
     return out;
 
+}
+function search(text) {
+    updateResults(text);
+    document.getElementById("search").value=text;
+}
+function generateIndex() {
+    let out="<h2>Index</h2><ul>";
+    let catInd=-1;
+    let subcat=0;
+    for(;subcat<dict.subcat.length;subcat++) {
+        while(dict.subcat[subcat]>dict.cat[catInd+1]&&catInd!=dict.cat.length-1) {
+            catInd++;
+            out+="</ul><h4><a href='javascript:search(\""+dict.catNames[catInd]+"\")'>"+dict.catNames[catInd]+"</a></h4><ul>";
+        }
+        let name=dict.subcatNames[subcat];
+        if(name=="Basic") continue;
+        out+="<li><a href='javascript:search(\""+dict.subcatNames[subcat]+"\")'>"+dict.subcatNames[subcat]+"</a></li>";
+    }
+    return out+"</ul>";
+}
+const helpPageNames = ["main", "number", "verb", "grammar", "index", "credits"];
+function openHelp(name, setSearch) {
+    if(name==null) name="";
+    name=name.toLowerCase();
+    if(setSearch) {
+        document.getElementById("search").value = "help " + name;
+    }
+    let pages = document.getElementsByClassName("helpPage");
+    for(let i = 0; i < pages.length; i++) pages[i].style.display = "none";
+    //Get page index
+    let pageIndex = -1;
+    for(let i = 0; i < helpPageNames.length; i++) {
+        if(helpPageNames[i].startsWith(name)) {
+            pageIndex = i;
+            break;
+        }
+    }
+    //If none found, redirect to main page and send error message
+    if(pageIndex == -1) {
+        pageIndex = 0;
+        document.getElementById("helpStatus").innerText = "Error: could not find help page " + name;
+    }
+    else document.getElementById("helpStatus").innerText = "";
+    let page = document.getElementById("help" + helpPageNames[pageIndex]);
+    page.style.display="block";
+    //Generate Index if needed
+    if(helpPageNames[pageIndex] == "index") {
+        page.innerHTML=generateIndex();
+    }
 }
