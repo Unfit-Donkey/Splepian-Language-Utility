@@ -1,0 +1,39 @@
+body {
+    color:#FFF;
+    background-color:#222;
+    font-size:1.25em;
+    margin:0px;
+    overflow-x:hidden;
+}
+#search {
+    position:sticky;
+    left:0;
+    top:0;
+    padding:0.5em;
+    font-size:1.5em;
+    background-color:#333;
+    border:none;
+    color:#EEE;
+    width:100vw;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+.result {
+    padding-top:5px;
+    padding-left:5vw;
+    padding-right:5vw;
+}
+.eng {
+    color:#CCC;
+}
+.SIn::after {
+    content:" → ";
+}
+.SCat {
+    float:right;
+    padding:0 10px 0 10px;
+}
+.SSubCat {
+    float:right;
+    padding:0 10px 0 10px;
+}

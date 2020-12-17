@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF8">
+        <title>Splepian Language Utility</title>
+        <script src="sp_words.js"></script>
+        <script src="utility.js"></script>
+        <link href="splep.css" rel="stylesheet" type="text/css"></link>
+    </head>
+
+    <body onkeydown="keyPress(event)">
+        <input type="text" id="search" oninput="updateResults(this.value)">
+        <div id="results"></div>
+    </body>
+
+</html>
