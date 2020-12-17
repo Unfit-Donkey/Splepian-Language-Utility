@@ -1,0 +1,2 @@
+# Splepian Language Utility
+Splepian is a satirical language designed for Minecraft. This utility has the entire Splepian dictionary and is an easy way to search for words. Currently, this tool only exists in English.

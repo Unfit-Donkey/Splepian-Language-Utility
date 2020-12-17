@@ -91,6 +91,7 @@ function performSearch(text) {
 onload = function () {
     dict = parseWords(wordsRaw);
     document.getElementById("search").value="Search...";
+    console.log("Visit https://github.com/Unfit-Donkey/Splepian-Language-Utility for more information.");
 }
 function updateResults(text) {
     let out = document.getElementById("results");
