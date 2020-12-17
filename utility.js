@@ -90,6 +90,7 @@ function performSearch(text) {
 }
 onload = function () {
     dict = parseWords(wordsRaw);
+    document.getElementById("search").value="Search...";
 }
 function updateResults(text) {
     let out = document.getElementById("results");

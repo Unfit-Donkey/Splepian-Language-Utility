@@ -10,7 +10,7 @@
     </head>
 
     <body onkeydown="keyPress(event)">
-        <input type="text" id="search" oninput="updateResults(this.value)">
+        <input type="text" id="search" oninput="updateResults(this.value)" value="Search" onblur="if(this.value=='') this.value='Search...'" onfocus="if(this.value=='Search...') this.value=''">
         <div id="results"></div>
     </body>
 
