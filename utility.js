@@ -165,27 +165,53 @@ function toDocument(includeIndex) {
 }
 function search(text) {
     updateResults(text);
-    document.getElementById("search").value=text;
+    document.getElementById("search").value = text;
 }
-function generateIndex() {
-    let out="<h2>Index</h2><ul>";
-    let catInd=-1;
-    let subcat=0;
-    for(;subcat<dict.subcat.length;subcat++) {
-        while(dict.subcat[subcat]>dict.cat[catInd+1]&&catInd!=dict.cat.length-1) {
+function generateIndex(useLinks) {
+    let out = "<h2>Index</h2><ul>";
+    let catInd = -1;
+    let subcat = 0;
+    for(; subcat < dict.subcat.length; subcat++) {
+        while(dict.subcat[subcat] > dict.cat[catInd + 1] && catInd != dict.cat.length - 1) {
             catInd++;
-            out+="</ul><h4><a href='javascript:search(\""+dict.catNames[catInd]+"\")'>"+dict.catNames[catInd]+"</a></h4><ul>";
+            out += "</ul><h4>"
+            if(useLinks) out += "<a href='javascript:search(\"" + dict.catNames[catInd] + "\")'>"
+            out += dict.catNames[catInd];
+            if(useLinks) out += "</a>";
+            out += "</h4><ul>";
         }
-        let name=dict.subcatNames[subcat];
-        if(name=="Basic") continue;
-        out+="<li><a href='javascript:search(\""+dict.subcatNames[subcat]+"\")'>"+dict.subcatNames[subcat]+"</a></li>";
+        let name = dict.subcatNames[subcat];
+        if(name == "Basic") continue;
+        out += "<li>"
+        if(useLinks) out += "<a href='javascript:search(\"" + dict.subcatNames[subcat] + "\")'>";
+        out += dict.subcatNames[subcat];
+        if(useLinks) out += "</a>"
+        out += "</li>";
     }
-    return out+"</ul>";
+    return out + "</ul>";
 }
-const helpPageNames = ["main", "number", "verb", "grammar", "index", "credits"];
+function generateWordList() {
+    let out = "<h2>Splepian Language Specification</h2><br>Created by: Benjamin Cates<br>Inspired By: Joseph<br>Word Count: " + dict.words.length / 2 + "<br><br>";
+    let i = 0;
+    let catID = -1;
+    let subcatID = -1;
+    for(i = 0; i < dict.words.length; i += 2) {
+        if(dict.cat[catID + 1] == i) {
+            catID++;
+            out += "<h3>" + dict.catNames[catID] + "</h3>";
+        }
+        if(dict.subcat[subcatID + 1] == i) {
+            subcatID++;
+            if(dict.subcatNames[subcatID] != "Basic") out += "<h4>" + dict.subcatNames[subcatID] + "</h4>";
+        }
+        out += dict.words[i] + ": " + dict.words[i + 1] + "<br>";
+    }
+    return out+"<br>"+generateIndex(false);
+}
+const helpPageNames = ["main", "number", "verb", "grammar", "index", "credits","wordlist"];
 function openHelp(name, setSearch) {
-    if(name==null) name="";
-    name=name.toLowerCase();
+    if(name == null) name = "";
+    name = name.toLowerCase();
     if(setSearch) {
         document.getElementById("search").value = "help " + name;
     }
@@ -206,9 +232,12 @@ function openHelp(name, setSearch) {
     }
     else document.getElementById("helpStatus").innerText = "";
     let page = document.getElementById("help" + helpPageNames[pageIndex]);
-    page.style.display="block";
+    page.style.display = "block";
     //Generate Index if needed
     if(helpPageNames[pageIndex] == "index") {
-        page.innerHTML=generateIndex();
+        page.innerHTML = generateIndex(true);
+    }
+    if(helpPageNames[pageIndex]=="wordlist") {
+        page.innerHTML = generateWordList();
     }
 }
